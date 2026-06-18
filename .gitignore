@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+
+uploads/
+compressed/
+
+.env
+venv/
+.venv/
+
+.idea/
+.vscode/

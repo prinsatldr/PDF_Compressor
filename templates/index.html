@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Compressor</title>
+
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+    <h1>PDF Compressor</h1>
+
+    <form action="/compress"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <div class="upload-box">
+
+            <h3>Select a PDF File</h3>
+
+            <label for="pdf"
+                   class="choose-btn">
+
+                Choose PDF
+
+            </label>
+
+            <input type="file"
+                   id="pdf"
+                   name="pdf"
+                   accept=".pdf"
+                   required>
+
+            <div id="filename">
+                No file selected
+            </div>
+
+        </div>
+
+        <div class="compression-options">
+
+            <label>
+                <input
+                    type="radio"
+                    name="mode"
+                    value="balanced"
+                    checked>
+
+                Balanced
+            </label>
+
+            <label>
+                <input
+                    type="radio"
+                    name="mode"
+                    value="aggressive">
+
+                Aggressive
+            </label>
+
+        </div>
+
+        <button class="compress-btn"
+                type="submit">
+
+            Compress PDF
+
+        </button>
+
+    </form>
+
+    {% if result %}
+
+    <div class="results">
+
+        <h2>Compression Complete</h2>
+
+        <div class="result-row">
+            <span>File</span>
+            <strong>{{ filename }}</strong>
+        </div>
+
+        <div class="result-row">
+            <span>Original Size</span>
+            <strong>{{ result.original_size }} MB</strong>
+        </div>
+
+        <div class="result-row">
+            <span>Compressed Size</span>
+            <strong>{{ result.compressed_size }} MB</strong>
+        </div>
+
+        <div class="result-row">
+            <span>Reduction</span>
+            <strong>{{ result.reduction }}%</strong>
+        </div>
+
+        <div class="result-row">
+            <span>Mode</span>
+            <strong>{{ mode.title() }}</strong>
+        </div>
+
+        <a href="/download/{{ download_file }}"
+           class="download-btn">
+
+            Download Compressed PDF
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</div>
+
+<script>
+
+const fileInput =
+document.getElementById("pdf");
+
+const filename =
+document.getElementById("filename");
+
+fileInput.addEventListener(
+    "change",
+    function(){
+
+        if(this.files.length > 0){
+
+            filename.innerText =
+            this.files[0].name;
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
